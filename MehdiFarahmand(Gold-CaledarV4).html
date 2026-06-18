@@ -22,9 +22,85 @@
   --shadow:0 8px 32px rgba(0,0,0,0.4);
   --shadow2:0 24px 80px rgba(0,0,0,0.6);
   --blur:blur(24px) saturate(180%);
+
+  --bg:#0A1628;
+  --mesh-1:rgba(201,168,76,0.08);
+  --mesh-2:rgba(17,34,68,0.9);
+  --mesh-3:rgba(201,168,76,0.05);
+  --glass-0:rgba(255,255,255,0.035);
+  --glass-1:rgba(255,255,255,0.06);
+  --glass-2:rgba(255,255,255,0.07);
+  --glass-3:rgba(255,255,255,0.12);
+  --glass-top:rgba(255,255,255,0.20);
+  --glass-top-2:rgba(255,255,255,0.16);
+  --border-1:rgba(255,255,255,0.07);
+  --border-2:rgba(255,255,255,0.13);
+  --navbar-bg:rgba(10,22,40,0.45);
+  --navbar-bg-s:rgba(10,22,40,0.65);
+  --sum-bg:rgba(0,0,0,0.15);
+  --gold-text-gradient:linear-gradient(135deg,#6B4F10 0%,#C9A84C 30%,#F5E4A8 55%,#E8C96A 75%,#8B6914 100%);
+}
+:root[data-theme="light"]{
+  --g:#9C7A1F;--g2:#7A5C12;--g3:#8B6914;--g4:#6B4F10;--g5:#B8902A;
+  --text:#1B2640;--text2:#56668A;--text3:#7C8AA3;
+  --bg:#F7F2E6;
+  --mesh-1:rgba(201,168,76,0.12);
+  --mesh-2:rgba(201,168,76,0.05);
+  --mesh-3:rgba(201,168,76,0.07);
+  --glass-0:rgba(255,255,255,0.55);
+  --glass-1:rgba(255,255,255,0.62);
+  --glass-2:rgba(255,255,255,0.70);
+  --glass-3:rgba(255,255,255,0.85);
+  --glass-top:rgba(255,255,255,0.92);
+  --glass-top-2:rgba(255,255,255,0.85);
+  --border-1:rgba(27,38,64,0.09);
+  --border-2:rgba(27,38,64,0.14);
+  --navbar-bg:rgba(247,242,230,0.72);
+  --navbar-bg-s:rgba(247,242,230,0.9);
+  --sum-bg:rgba(27,38,64,0.045);
+  --gold-text-gradient:linear-gradient(135deg,#5C4309 0%,#8B6914 30%,#A8801F 55%,#7A5C12 75%,#5C4309 100%);
 }
 html{scroll-behavior:smooth}
-body{background:var(--navy);color:var(--text);font-family:'Vazirmatn',Tahoma,sans-serif;overflow-x:hidden;min-height:100vh}
+body{background:var(--bg);color:var(--text);font-family:'Vazirmatn',Tahoma,sans-serif;overflow-x:hidden;min-height:100vh;
+  transition:background .5s ease,color .5s ease}
+body.loading{overflow:hidden}
+
+/* ── LOADER ── */
+#loader{position:fixed;inset:0;z-index:9999;background:var(--navy);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  transition:opacity .6s ease,visibility .6s ease}
+#loader.hide{opacity:0;visibility:hidden;pointer-events:none}
+.loader-rings{position:relative;width:118px;height:118px;margin-bottom:24px}
+.loader-ring{position:absolute;inset:0;border-radius:50%;border:2px solid transparent}
+.loader-ring.r1{border-top-color:var(--g);border-right-color:#E8C96A;animation:loaderSpin 1.8s linear infinite}
+.loader-ring.r2{inset:13px;border-bottom-color:#F5E4A8;border-left-color:#C9A84C;animation:loaderSpin 1.3s linear infinite reverse}
+.loader-coin{position:absolute;inset:28px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#FFD97D,#C9A84C 55%,#8B6914 100%);
+  box-shadow:0 0 30px rgba(201,168,76,.6),inset 0 2px 6px rgba(255,255,255,.45);
+  display:flex;align-items:center;justify-content:center;
+  animation:coinPulse 2s ease-in-out infinite}
+.loader-coin span{font-size:20px;font-weight:900;color:#3a2a05;letter-spacing:.5px}
+@keyframes loaderSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes coinPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.loader-chart{display:flex;align-items:flex-end;gap:5px;height:34px;margin-bottom:20px}
+.loader-bar-c{width:6px;border-radius:3px 3px 0 0;background:linear-gradient(180deg,#F5E4A8,#C9A84C)}
+.loader-bar-c:nth-child(1){animation:barGrow 1.4s ease-in-out infinite}
+.loader-bar-c:nth-child(2){animation:barGrow 1.4s ease-in-out .15s infinite}
+.loader-bar-c:nth-child(3){animation:barGrow 1.4s ease-in-out .3s infinite}
+.loader-bar-c:nth-child(4){animation:barGrow 1.4s ease-in-out .45s infinite}
+.loader-bar-c:nth-child(5){animation:barGrow 1.4s ease-in-out .6s infinite}
+@keyframes barGrow{0%,100%{height:8px}50%{height:34px}}
+.loader-label{font-size:10px;color:#E8C96A;letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;font-weight:700}
+.loader-progress{width:160px;height:3px;border-radius:3px;background:rgba(255,255,255,.08);
+  overflow:hidden;margin-top:20px}
+.loader-progress-fill{height:100%;width:0%;border-radius:3px;
+  background:linear-gradient(90deg,#8B6914,#C9A84C,#F5E4A8);
+  animation:loaderFill 2.1s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes loaderFill{from{width:0%}to{width:100%}}
+.loader-credit{font-size:11px;color:#4A6080;letter-spacing:1.5px;margin-top:22px}
+.loader-credit b{background:linear-gradient(135deg,#8B6914,#C9A84C,#F5E4A8,#C9A84C,#8B6914);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  font-weight:900;letter-spacing:2.5px;animation:shimmer 3s ease-in-out infinite;margin-right:4px}
 
 /* ── CANVAS PARTICLES ── */
 #particles{position:fixed;inset:0;z-index:0;pointer-events:none}
@@ -32,36 +108,36 @@ body{background:var(--navy);color:var(--text);font-family:'Vazirmatn',Tahoma,san
 /* ── BACKGROUND GRADIENT MESH ── */
 .bg-mesh{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .bg-mesh::before{content:'';position:absolute;width:900px;height:900px;border-radius:50%;
-  background:radial-gradient(circle,rgba(201,168,76,0.08) 0%,transparent 65%);
-  top:-300px;right:-300px;animation:meshFloat 18s ease-in-out infinite}
+  background:radial-gradient(circle,var(--mesh-1) 0%,transparent 65%);
+  top:-300px;right:-300px;animation:meshFloat 18s ease-in-out infinite;transition:background .5s ease}
 .bg-mesh::after{content:'';position:absolute;width:700px;height:700px;border-radius:50%;
-  background:radial-gradient(circle,rgba(17,34,68,0.9) 0%,transparent 70%);
-  bottom:-200px;left:-200px;animation:meshFloat 22s ease-in-out 5s infinite reverse}
+  background:radial-gradient(circle,var(--mesh-2) 0%,transparent 70%);
+  bottom:-200px;left:-200px;animation:meshFloat 22s ease-in-out 5s infinite reverse;transition:background .5s ease}
 .bg-orb3{position:fixed;width:500px;height:500px;border-radius:50%;
-  background:radial-gradient(circle,rgba(201,168,76,0.05) 0%,transparent 70%);
-  top:40%;left:20%;z-index:0;pointer-events:none;animation:meshFloat 26s ease-in-out 3s infinite;filter:blur(40px)}
+  background:radial-gradient(circle,var(--mesh-3) 0%,transparent 70%);
+  top:40%;left:20%;z-index:0;pointer-events:none;animation:meshFloat 26s ease-in-out 3s infinite;filter:blur(40px);transition:background .5s ease}
 @keyframes meshFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-60px) scale(1.08)}66%{transform:translate(-30px,30px) scale(0.94)}}
 
 /* ── GLASS LAYER SYSTEM ── */
 .glass-card{
-  background:rgba(255,255,255,0.07);
+  background:var(--glass-2);
   backdrop-filter:blur(32px) saturate(200%);
   -webkit-backdrop-filter:blur(32px) saturate(200%);
-  border:1px solid rgba(255,255,255,0.14);
-  border-top:1px solid rgba(255,255,255,0.22);
-  border-left:1px solid rgba(255,255,255,0.18);
+  border:1px solid var(--border-2);
+  border-top:1px solid var(--glass-top);
+  border-left:1px solid var(--border-2);
   box-shadow:0 8px 32px rgba(0,0,0,0.35),inset 0 1px 0 rgba(255,255,255,0.12),inset 0 -1px 0 rgba(0,0,0,0.1);
 }
 
 /* ── NAVBAR ── */
 .navbar{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;
   display:flex;align-items:center;justify-content:space-between;padding:0 20px;
-  background:rgba(10,22,40,0.45);
+  background:var(--navbar-bg);
   backdrop-filter:blur(40px) saturate(200%);-webkit-backdrop-filter:blur(40px) saturate(200%);
-  border-bottom:1px solid rgba(255,255,255,0.10);
+  border-bottom:1px solid var(--border-1);
   transition:all .4s}
 .navbar.scrolled{
-  background:rgba(10,22,40,0.65);
+  background:var(--navbar-bg-s);
   box-shadow:0 1px 0 rgba(201,168,76,0.2),0 4px 32px rgba(0,0,0,0.4);
 }
 .nav-brand{display:flex;align-items:center;gap:12px}
@@ -82,6 +158,22 @@ body{background:var(--navy);color:var(--text);font-family:'Vazirmatn',Tahoma,san
 .nav-ig:hover{background:linear-gradient(135deg,rgba(201,168,76,0.38),rgba(201,168,76,0.16));
   box-shadow:0 0 24px rgba(201,168,76,.25),0 0 0 1px rgba(201,168,76,.5);transform:translateY(-1px)}
 
+/* ── THEME TOGGLE ── */
+.theme-toggle{position:relative;width:52px;height:28px;border-radius:20px;
+  border:1px solid var(--border-2);background:var(--glass-2);cursor:pointer;
+  display:flex;align-items:center;justify-content:space-between;padding:0 7px;
+  transition:background .4s,border-color .4s;flex-shrink:0}
+.theme-toggle .tt-icon{font-size:12px;line-height:1;position:relative;z-index:1;opacity:.85;pointer-events:none}
+.theme-toggle .tt-knob{position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;
+  background:linear-gradient(135deg,#F5E4A8,#C9A84C);
+  box-shadow:0 2px 8px rgba(0,0,0,.35),0 0 10px rgba(201,168,76,.45);
+  transition:transform .45s cubic-bezier(.34,1.3,.64,1),background .4s;z-index:0}
+:root[data-theme="light"] .theme-toggle .tt-knob{
+  transform:translateX(-26px);
+  background:linear-gradient(135deg,#FFE9A8,#FFC65C);
+  box-shadow:0 2px 8px rgba(27,38,64,.25),0 0 10px rgba(255,198,92,.55)}
+:root[data-theme="light"] .theme-toggle{background:rgba(255,255,255,.65);border-color:rgba(27,38,64,.14)}
+
 /* ── HERO ── */
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
   text-align:center;padding:100px 24px 80px;position:relative;z-index:1;overflow:hidden}
@@ -100,18 +192,17 @@ body{background:var(--navy);color:var(--text);font-family:'Vazirmatn',Tahoma,san
   font-weight:600;
 }
 
-/* تایتل اصلی — FIX: فاصله عمودی بین دو خط */
 .hero-title-wrap{
   margin-bottom:8px;
   animation:fadeUp .9s ease .1s both;
   display:flex;
   flex-direction:column;
-  gap:12px; /* ← فاصله عمودی بین دو خط */
+  gap:12px;
 }
 .hero-h1{
   font-size:clamp(42px,8.5vw,104px);
   font-weight:900;
-  line-height:1.1; /* ← کمی بزرگتر از 1 برای فاصله بهتر */
+  line-height:1.1;
   letter-spacing:-2px;
   color:var(--text);
   display:block;
@@ -123,7 +214,7 @@ body{background:var(--navy);color:var(--text);font-family:'Vazirmatn',Tahoma,san
     line-height:1.15;
   }
 }
-.hero-h1.gold{background:linear-gradient(135deg,#6B4F10 0%,#C9A84C 30%,#F5E4A8 55%,#E8C96A 75%,#8B6914 100%);
+.hero-h1.gold{background:var(--gold-text-gradient);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   filter:drop-shadow(0 0 40px rgba(201,168,76,.4));
   animation:shimmer 4s ease-in-out infinite}
@@ -165,13 +256,13 @@ body{background:var(--navy);color:var(--text);font-family:'Vazirmatn',Tahoma,san
 .btn-secondary{
   padding:14px 32px;border-radius:20px;font-size:13px;font-weight:600;
   cursor:pointer;font-family:'Vazirmatn',sans-serif;
-  background:rgba(255,255,255,0.07);color:var(--text2);
-  border:1px solid rgba(255,255,255,.16);
+  background:var(--glass-2);color:var(--text2);
+  border:1px solid var(--border-2);
   backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   transition:all .35s cubic-bezier(.4,0,.2,1);
   box-shadow:0 4px 24px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.10)
 }
-.btn-secondary:hover{background:rgba(255,255,255,0.12);
+.btn-secondary:hover{background:var(--glass-3);
   border-color:rgba(201,168,76,.3);color:var(--text);
   transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.14)}
 
@@ -188,21 +279,26 @@ body{background:var(--navy);color:var(--text);font-family:'Vazirmatn',Tahoma,san
 /* ── CLOCKS — Glass iOS style ── */
 .clocks-bar{
   position:relative;z-index:1;
-  display:flex;justify-content:center;gap:0;
-  background:rgba(255,255,255,0.05);
+  display:flex;justify-content:center;gap:0;flex-wrap:wrap;
+  background:var(--glass-1);
   backdrop-filter:blur(40px) saturate(200%);
   -webkit-backdrop-filter:blur(40px) saturate(200%);
-  border-top:1px solid rgba(255,255,255,0.10);
-  border-bottom:1px solid rgba(255,255,255,0.08);
+  border-top:1px solid var(--border-2);
+  border-bottom:1px solid var(--border-1);
   box-shadow:inset 0 1px 0 rgba(255,255,255,0.08),0 4px 24px rgba(0,0,0,0.2);
+  transition:background .4s ease,border-color .4s ease;
 }
-.clock-item{text-align:center;padding:22px 60px;border-right:1px solid rgba(255,255,255,.07)}
+.clock-item{text-align:center;padding:22px 60px;border-right:1px solid var(--border-1);transition:border-color .4s ease}
 .clock-item:last-child{border-right:none}
+.clock-extra{display:none}
+@media(min-width:641px){.clock-extra{display:block}}
 .clock-city{font-size:9px;letter-spacing:2.5px;color:var(--text3);text-transform:uppercase;
   margin-bottom:6px;display:flex;align-items:center;justify-content:center;gap:6px}
+.clock-city svg{flex-shrink:0;border-radius:2px}
 .clock-time{font-family:'SF Mono',Courier,monospace;font-size:18px;font-weight:700;
   color:var(--g3);letter-spacing:2px;
   text-shadow:0 0 20px rgba(201,168,76,.4)}
+@media(max-width:640px){#clock-ny{border-right:none}}
 
 /* ── GOLD DIVIDER ── */
 .gold-div{height:1px;
@@ -225,9 +321,9 @@ section{position:relative;z-index:1;padding:80px 20px}
 /* ── WEEK GRID — iOS Glass ── */
 .week-header{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px}
 .week-day-btn{
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.12);
-  border-top:1px solid rgba(255,255,255,0.20);
+  background:var(--glass-1);
+  border:1px solid var(--border-2);
+  border-top:1px solid var(--glass-top);
   border-radius:22px;padding:18px 8px 16px;
   text-align:center;cursor:pointer;transition:all .4s cubic-bezier(.4,0,.2,1);
   position:relative;overflow:hidden;
@@ -262,9 +358,9 @@ section{position:relative;z-index:1;padding:80px 20px}
 
 /* ── DAY PANEL — Glass iOS ── */
 .day-panel{
-  background:rgba(255,255,255,0.055);
-  border:1px solid rgba(255,255,255,0.14);
-  border-top:1px solid rgba(255,255,255,0.22);
+  background:var(--glass-1);
+  border:1px solid var(--border-2);
+  border-top:1px solid var(--glass-top);
   border-radius:28px;overflow:hidden;
   box-shadow:0 32px 80px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,0.05),inset 0 1px 0 rgba(255,255,255,.12);
   backdrop-filter:blur(40px) saturate(200%);
@@ -272,8 +368,8 @@ section{position:relative;z-index:1;padding:80px 20px}
   transition:all .4s cubic-bezier(.4,0,.2,1);
 }
 .day-panel-header{padding:28px 28px 22px;
-  background:linear-gradient(135deg,rgba(201,168,76,.07),rgba(255,255,255,.03));
-  border-bottom:1px solid rgba(255,255,255,.08)}
+  background:linear-gradient(135deg,rgba(201,168,76,.07),var(--glass-0));
+  border-bottom:1px solid var(--border-1)}
 .dph-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:16px}
 .dph-date{display:flex;flex-direction:column;gap:5px}
 .dph-day{font-size:22px;font-weight:900;color:var(--text)}
@@ -308,7 +404,7 @@ section{position:relative;z-index:1;padding:80px 20px}
 .tl-wrap{padding:22px 24px 8px;position:relative}
 .tl-item{display:flex;gap:14px;position:relative;animation:rowIn .45s ease both}
 .tl-track{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:14px;padding-top:24px}
-.tl-dot{width:13px;height:13px;border-radius:50%;background:var(--g);border:3px solid var(--navy2);
+.tl-dot{width:13px;height:13px;border-radius:50%;background:var(--g);border:3px solid var(--bg);
   box-shadow:0 0 0 1px rgba(201,168,76,.4),0 0 16px rgba(201,168,76,.5);flex-shrink:0;
   transition:background .4s,box-shadow .4s,border-color .4s;position:relative;z-index:1}
 .tl-line{width:2px;flex:1;min-height:34px;
@@ -316,8 +412,8 @@ section{position:relative;z-index:1;padding:80px 20px}
   margin:2px 0 8px;transition:background .4s}
 .tl-item:last-child .tl-line{display:none}
 .tl-card{flex:1;min-width:0;margin-bottom:14px;
-  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.13);
-  border-top:1px solid rgba(255,255,255,0.20);border-radius:18px;overflow:hidden;
+  background:var(--glass-1);border:1px solid var(--border-2);
+  border-top:1px solid var(--glass-top);border-radius:18px;overflow:hidden;
   backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);
   box-shadow:0 6px 24px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.10);
   transition:all .4s cubic-bezier(.4,0,.2,1)}
@@ -338,15 +434,15 @@ section{position:relative;z-index:1;padding:80px 20px}
   font-size:10px;color:var(--g3);transition:transform .3s;flex-shrink:0}
 .tl-card.open .tl-chevron{transform:rotate(180deg)}
 .tl-card-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
-.tl-card.open .tl-card-body{max-height:220px;border-top:1px solid rgba(255,255,255,.06)}
+.tl-card.open .tl-card-body{max-height:220px;border-top:1px solid var(--border-1)}
 .tl-detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:16px 18px}
-.tl-detail-item{text-align:center;background:rgba(255,255,255,.04);border-radius:12px;padding:10px 6px;
-  border:1px solid rgba(255,255,255,.06)}
+.tl-detail-item{text-align:center;background:var(--glass-0);border-radius:12px;padding:10px 6px;
+  border:1px solid var(--border-1)}
 .tl-detail-label{font-size:9px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
 .tl-detail-val{font-family:'SF Mono',Courier,monospace;font-size:13px;font-weight:700;color:var(--text2)}
 
 /* live state — اکنون درحال انتشار */
-.tl-item.live .tl-dot{background:var(--bear);border-color:var(--navy2);
+.tl-item.live .tl-dot{background:var(--bear);border-color:var(--bg);
   box-shadow:0 0 0 1px rgba(224,82,82,.5),0 0 22px rgba(224,82,82,.7);
   animation:livePulseDot 1.3s ease-in-out infinite}
 @keyframes livePulseDot{0%,100%{transform:scale(1)}50%{transform:scale(1.4)}}
@@ -361,12 +457,12 @@ section{position:relative;z-index:1;padding:80px 20px}
 .tl-item.live .tl-status{color:#FF6B6B;font-weight:700}
 
 /* ended state — پایان‌یافته / غیرفعال */
-.tl-item.ended .tl-dot{background:transparent;border-color:rgba(255,255,255,.15);box-shadow:none}
-.tl-item.ended .tl-line{background:rgba(255,255,255,.06)}
+.tl-item.ended .tl-dot{background:transparent;border-color:var(--border-2);box-shadow:none}
+.tl-item.ended .tl-line{background:var(--border-1)}
 .tl-item.ended .tl-card{opacity:.42;filter:saturate(.45)}
 .tl-item.ended .tl-card:hover{opacity:.6}
 .tl-item.ended .tl-time{color:var(--text3)}
-.tl-item.ended .tl-time-block{background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.08)}
+.tl-item.ended .tl-time-block{background:var(--glass-0);border-color:var(--border-1)}
 .tl-item.ended .tl-status{color:var(--text3)}
 .tl-item.ended .cur-badge,.tl-item.ended .imp-badge,
 .tl-item.ended .xau-up,.tl-item.ended .xau-dn,.tl-item.ended .xau-ne{filter:grayscale(1);opacity:.55}
@@ -381,15 +477,16 @@ section{position:relative;z-index:1;padding:80px 20px}
 
 /* ── SUMMARY ── */
 .summary-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:20px;
-  background:rgba(0,0,0,0.15);border-top:1px solid rgba(255,255,255,.06)}
+  background:var(--sum-bg);border-top:1px solid var(--border-1);transition:background .4s ease,border-color .4s ease}
 @media(max-width:580px){.summary-wrap{grid-template-columns:1fr}}
 .sum-card{
-  background:rgba(255,255,255,0.05);
+  background:var(--glass-0);
   border-radius:20px;padding:20px;
-  border:1px solid rgba(255,255,255,.10);
-  border-top:1px solid rgba(255,255,255,.16);
+  border:1px solid var(--border-1);
+  border-top:1px solid var(--glass-top-2);
   backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   box-shadow:0 4px 20px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.08);
+  transition:background .4s ease,border-color .4s ease;
 }
 .sum-card-title{font-size:9px;font-weight:700;color:var(--text3);letter-spacing:2px;
   text-transform:uppercase;margin-bottom:14px}
@@ -417,8 +514,8 @@ section{position:relative;z-index:1;padding:80px 20px}
   justify-content:center;color:#fff;font-size:10px;font-weight:700;
   transition:width 1.4s cubic-bezier(.4,0,.2,1) .2s}
 
-/* ── TELEGRAM ── */
-.tg-outer{padding:20px;border-top:1px solid rgba(255,255,255,.06)}
+/* ── TELEGRAM (intentionally kept as a fixed dark device-mockup in both themes) ── */
+.tg-outer{padding:20px;border-top:1px solid var(--border-1);transition:border-color .4s ease}
 .tg-label{font-size:9px;font-weight:700;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
 .tg-card{
   background:rgba(10,22,40,0.7);
@@ -432,25 +529,28 @@ section{position:relative;z-index:1;padding:80px 20px}
 .tg-hdr{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:14px;
   border-bottom:1px solid rgba(255,255,255,.05)}
 .tg-av{width:34px;height:34px;border-radius:50%;
-  background:linear-gradient(135deg,var(--g),var(--g4));
+  background:linear-gradient(135deg,#C9A84C,#8B6914);
   display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;
   box-shadow:0 0 16px rgba(201,168,76,.3)}
 .tg-ch{font-size:12px;font-weight:700;color:#E0EAF5}
 .tg-vs{font-size:9px;color:#2A3F5A;margin-top:1px}
 .tg-body{font-size:12px;line-height:2.2;color:#8AAAC8;white-space:pre-wrap;direction:rtl;text-align:right;font-weight:400}
 .tg-ts{font-size:9px;color:#1E3050;text-align:left;margin-top:12px;direction:ltr}
-.copy-btn{position:absolute;top:14px;left:14px;
+.tg-actions{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+.copy-btn,.share-btn{
   background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.28);
-  color:var(--g3);font-size:10px;padding:5px 12px;border-radius:10px;
+  color:#E8C96A;font-size:11px;padding:7px 16px;border-radius:10px;font-weight:600;
   cursor:pointer;font-family:'Vazirmatn',sans-serif;transition:all .25s;backdrop-filter:blur(8px)}
-.copy-btn:hover{background:rgba(201,168,76,.24);box-shadow:0 0 16px rgba(201,168,76,.2)}
+.copy-btn:hover,.share-btn:hover{background:rgba(201,168,76,.24);box-shadow:0 0 16px rgba(201,168,76,.2)}
+.share-btn{background:rgba(91,159,224,.12);border-color:rgba(91,159,224,.28);color:#7FB4E8}
+.share-btn:hover{background:rgba(91,159,224,.22);box-shadow:0 0 16px rgba(91,159,224,.25)}
 
 /* ── ANALYSIS GRID ── */
 .analysis-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
 .an-card{
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.11);
-  border-top:1px solid rgba(255,255,255,0.20);
+  background:var(--glass-1);
+  border:1px solid var(--border-2);
+  border-top:1px solid var(--glass-top);
   border-radius:22px;padding:24px;transition:all .4s cubic-bezier(.4,0,.2,1);
   backdrop-filter:blur(24px) saturate(180%);
   -webkit-backdrop-filter:blur(24px) saturate(180%);
@@ -474,7 +574,7 @@ section{position:relative;z-index:1;padding:80px 20px}
 .narrative-swipe{
   display:none;
   padding:0 16px 20px;
-  border-top:1px solid rgba(255,255,255,.05);
+  border-top:1px solid var(--border-1);
 }
 @media(max-width:640px){
   .narrative-swipe{display:block}
@@ -482,13 +582,13 @@ section{position:relative;z-index:1;padding:80px 20px}
 }
 .swipe-handle{
   width:40px;height:4px;border-radius:4px;
-  background:rgba(255,255,255,0.18);
+  background:var(--border-2);
   margin:12px auto 16px;cursor:pointer;
 }
 .swipe-card{
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,.12);
-  border-top:1px solid rgba(255,255,255,0.20);
+  background:var(--glass-1);
+  border:1px solid var(--border-2);
+  border-top:1px solid var(--glass-top);
   border-radius:20px;
   backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
   overflow:hidden;
@@ -499,7 +599,7 @@ section{position:relative;z-index:1;padding:80px 20px}
   display:flex;justify-content:space-between;align-items:center;
   padding:14px 18px;cursor:pointer;
   background:rgba(201,168,76,.04);
-  border-bottom:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid var(--border-1);
 }
 .swipe-card-title{font-size:11px;font-weight:700;color:var(--g3);letter-spacing:1px}
 .swipe-chevron{
@@ -516,16 +616,17 @@ section{position:relative;z-index:1;padding:80px 20px}
   padding:0 18px;
 }
 .swipe-card.open .swipe-card-body{
-  max-height:600px;
+  max-height:1300px;
   padding:16px 18px;
 }
 .swipe-chain{display:flex;flex-direction:column;gap:0}
 
 /* ── FOOTER ── */
-footer{border-top:1px solid rgba(255,255,255,.06);text-align:center;padding:52px 20px;
+footer{border-top:1px solid var(--border-1);text-align:center;padding:52px 20px;
   position:relative;z-index:1;
-  background:rgba(255,255,255,0.025);
+  background:var(--glass-0);
   backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  transition:background .4s ease,border-color .4s ease;
 }
 footer a{color:var(--g3);text-decoration:none;font-weight:600;transition:color .25s}
 footer a:hover{color:var(--g2)}
@@ -548,7 +649,21 @@ footer a:hover{color:var(--g2)}
 }
 </style>
 </head>
-<body>
+<body class="loading">
+<div id="loader">
+  <div class="loader-rings">
+    <div class="loader-ring r1"></div>
+    <div class="loader-ring r2"></div>
+    <div class="loader-coin"><span>XAU</span></div>
+  </div>
+  <div class="loader-chart">
+    <div class="loader-bar-c"></div><div class="loader-bar-c"></div><div class="loader-bar-c"></div><div class="loader-bar-c"></div><div class="loader-bar-c"></div>
+  </div>
+  <div class="loader-label">تقویم اقتصادی طلا · XAU/USD</div>
+  <div class="loader-progress"><div class="loader-progress-fill"></div></div>
+  <div class="loader-credit">Designed by <b>MEHDI FARAHMAND</b></div>
+</div>
+
 <canvas id="particles"></canvas>
 <div class="bg-mesh"></div>
 <div class="bg-orb3"></div>
@@ -564,6 +679,10 @@ footer a:hover{color:var(--g2)}
   </div>
   <div class="nav-right">
     <span class="nav-chip">XAU/USD</span>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="تغییر تم روشن و تاریک" aria-pressed="false">
+      <span class="tt-icon">🌙</span><span class="tt-icon">☀️</span>
+      <span class="tt-knob"></span>
+    </button>
     <a href="https://www.instagram.com/Farahmand.design" target="_blank" class="nav-ig">Mehdi Farahmand ↗</a>
   </div>
 </nav>
@@ -593,16 +712,13 @@ footer a:hover{color:var(--g2)}
 
 <!-- CLOCKS -->
 <div class="clocks-bar">
-  <div class="clock-item">
+  <div class="clock-item" id="clock-tehran">
     <div class="clock-city">
-      <svg width="33" height="22" viewBox="0 0 330 220" xmlns="http://www.w3.org/2000/svg">
-        <!-- سه نوار پرچم -->
+      <svg width="33" height="22" viewBox="0 0 330 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <rect width="330" height="220" fill="#239F40"/>
         <rect y="73" width="330" height="74" fill="#FFFFFF"/>
         <rect y="147" width="330" height="73" fill="#DA0000"/>
-        <!-- خورشید -->
         <circle cx="165" cy="110" r="22" fill="#F0A500"/>
-        <!-- پرتوهای خورشید -->
         <g stroke="#F0A500" stroke-width="3.5" stroke-linecap="round">
           <line x1="165" y1="80" x2="165" y2="72"/>
           <line x1="165" y1="140" x2="165" y2="148"/>
@@ -621,30 +737,19 @@ footer a:hover{color:var(--g2)}
           <line x1="195" y1="100" x2="203" y2="97"/>
           <line x1="135" y1="120" x2="127" y2="123"/>
         </g>
-        <!-- شیر — بدن اصلی -->
         <g fill="#C8820A">
-          <!-- بدن -->
           <ellipse cx="158" cy="116" rx="28" ry="16" fill="#D4920C"/>
-          <!-- سر شیر -->
           <circle cx="184" cy="103" r="14" fill="#D4920C"/>
-          <!-- یال -->
           <circle cx="184" cy="103" r="18" fill="none" stroke="#A06008" stroke-width="6" opacity="0.7"/>
-          <!-- پاهای جلو -->
           <rect x="176" y="126" width="7" height="16" rx="3" fill="#C8820A"/>
           <rect x="186" y="128" width="7" height="14" rx="3" fill="#C8820A"/>
-          <!-- پاهای عقب -->
           <rect x="140" y="124" width="7" height="16" rx="3" fill="#C8820A"/>
           <rect x="150" y="126" width="7" height="14" rx="3" fill="#C8820A"/>
-          <!-- دم خمیده -->
           <path d="M130,118 C120,108 118,96 126,90 C128,94 124,103 132,110" fill="#C8820A"/>
-          <!-- تاج کوچک روی سر -->
           <polygon points="178,90 181,83 184,90 187,83 190,90" fill="#F0C030"/>
-          <!-- شمشیر -->
           <rect x="190" y="100" width="28" height="3" rx="1.5" fill="#E8E0C0" transform="rotate(-15,190,100)"/>
           <rect x="188" y="98" width="5" height="5" rx="1" fill="#F0C030"/>
-          <!-- چشم -->
           <circle cx="188" cy="100" r="2" fill="#2A1A00"/>
-          <!-- بینی -->
           <circle cx="192" cy="106" r="1.5" fill="#8B5A00"/>
         </g>
       </svg>
@@ -652,9 +757,49 @@ footer a:hover{color:var(--g2)}
     </div>
     <div class="clock-time" id="ct">--:--:--</div>
   </div>
-  <div class="clock-item">
-    <div class="clock-city">🇺🇸 New York</div>
+  <div class="clock-item" id="clock-ny">
+    <div class="clock-city">
+      <svg width="33" height="22" viewBox="0 0 330 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="330" height="220" fill="#FFFFFF"/>
+        <rect width="330" height="44" y="0" fill="#B22234"/>
+        <rect width="330" height="44" y="88" fill="#B22234"/>
+        <rect width="330" height="44" y="176" fill="#B22234"/>
+        <rect width="140" height="132" fill="#3C3B6E"/>
+      </svg>
+      New York
+    </div>
     <div class="clock-time" id="cny">--:--:--</div>
+  </div>
+  <div class="clock-item clock-extra" id="clock-london">
+    <div class="clock-city">
+      <svg width="33" height="22" viewBox="0 0 330 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="330" height="220" fill="#00247D"/>
+        <g stroke="#FFFFFF" stroke-width="44">
+          <line x1="0" y1="0" x2="330" y2="220"/>
+          <line x1="330" y1="0" x2="0" y2="220"/>
+        </g>
+        <g stroke="#CF142B" stroke-width="16">
+          <line x1="0" y1="0" x2="330" y2="220"/>
+          <line x1="330" y1="0" x2="0" y2="220"/>
+        </g>
+        <rect y="85" width="330" height="50" fill="#FFFFFF"/>
+        <rect x="140" width="50" height="220" fill="#FFFFFF"/>
+        <rect y="98" width="330" height="24" fill="#CF142B"/>
+        <rect x="153" width="24" height="220" fill="#CF142B"/>
+      </svg>
+      لندن
+    </div>
+    <div class="clock-time" id="clo">--:--:--</div>
+  </div>
+  <div class="clock-item clock-extra" id="clock-tokyo">
+    <div class="clock-city">
+      <svg width="33" height="22" viewBox="0 0 330 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="330" height="220" fill="#FFFFFF"/>
+        <circle cx="165" cy="110" r="66" fill="#BC002D"/>
+      </svg>
+      توکیو
+    </div>
+    <div class="clock-time" id="ctk">--:--:--</div>
   </div>
 </div>
 <div class="gold-div"></div>
@@ -692,7 +837,7 @@ footer a:hover{color:var(--g2)}
 <div class="gold-div"></div>
 
 <footer>
-  <div style="font-size:24px;font-weight:900;background:linear-gradient(135deg,#8B6914,#C9A84C,#F5E4A8,#C9A84C,#8B6914);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px">تحلیل اخبار اقتصادی</div>
+  <div style="font-size:24px;font-weight:900;background:var(--gold-text-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px">تحلیل اخبار اقتصادی</div>
   <div style="font-size:11px;color:var(--text3);letter-spacing:4px;text-transform:uppercase;margin-bottom:6px">Economic News Analysis</div>
   <p style="font-size:12px;color:var(--text3);margin-bottom:18px">تحلیل‌گر بازارهای مالی · متخصص XAU/USD</p>
   <a href="https://www.instagram.com/Farahmand.design" target="_blank">📸 Mehdi Farahmand</a>
@@ -700,6 +845,16 @@ footer a:hover{color:var(--g2)}
 </footer>
 
 <script>
+/* ── LOADER DISMISS ── */
+setTimeout(()=>{
+  const ld=document.getElementById('loader');
+  if(ld){
+    ld.classList.add('hide');
+    document.body.classList.remove('loading');
+    setTimeout(()=>{ld.remove()},700);
+  }
+},2300);
+
 /* ── PARTICLES ── */
 (function(){
   const c=document.getElementById('particles');
@@ -709,30 +864,32 @@ footer a:hover{color:var(--g2)}
   resize();
   window.addEventListener('resize',resize);
   const gold='rgba(201,168,76,';
-  const white='rgba(255,255,255,';
   for(let i=0;i<70;i++){
     pts.push({
       x:Math.random()*2000,y:Math.random()*1200,
       vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,
       r:Math.random()*1.5+.3,
       a:Math.random(),
-      c:Math.random()>.5?gold:white,
+      isGold:Math.random()>.5,
       pulse:Math.random()*Math.PI*2
     });
   }
   function draw(){
     ctx.clearRect(0,0,W,H);
     const t=Date.now()*.001;
+    const light=document.documentElement.getAttribute('data-theme')==='light';
+    const secondary=light?'rgba(60,48,22,':'rgba(255,255,255,';
     pts.forEach(p=>{
       p.x+=p.vx;p.y+=p.vy;
       if(p.x<0)p.x=W;if(p.x>W)p.x=0;
       if(p.y<0)p.y=H;if(p.y>H)p.y=0;
       const alpha=(.3+.4*Math.sin(t+p.pulse))*p.a;
+      const col=p.isGold?gold:secondary;
       ctx.beginPath();
       ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle=p.c+alpha+')';
+      ctx.fillStyle=col+alpha+')';
       ctx.fill();
-      if(p.c===gold&&alpha>.3){
+      if(p.isGold&&alpha>.3){
         ctx.beginPath();
         ctx.arc(p.x,p.y,p.r*3,0,Math.PI*2);
         ctx.fillStyle=gold+(alpha*.15)+')';
@@ -758,6 +915,16 @@ footer a:hover{color:var(--g2)}
   draw();
 })();
 
+/* ── THEME TOGGLE ── */
+function toggleTheme(){
+  const html=document.documentElement;
+  const isLight=html.getAttribute('data-theme')==='light';
+  if(isLight){html.removeAttribute('data-theme');}
+  else{html.setAttribute('data-theme','light');}
+  const btn=document.getElementById('themeToggle');
+  if(btn)btn.setAttribute('aria-pressed',String(!isLight));
+}
+
 /* ── CLOCKS ── */
 function getTime(tz){
   const p=new Intl.DateTimeFormat('en-US',{timeZone:tz,hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).formatToParts(new Date());
@@ -768,6 +935,8 @@ function getTime(tz){
 function tick(){
   document.getElementById('ct').textContent=getTime('Asia/Tehran');
   document.getElementById('cny').textContent=getTime('America/New_York');
+  document.getElementById('clo').textContent=getTime('Europe/London');
+  document.getElementById('ctk').textContent=getTime('Asia/Tokyo');
 }
 setInterval(tick,1000);tick();
 
@@ -977,8 +1146,23 @@ function updateTimers(){
 }
 setInterval(updateTimers,1000);
 
+function buildTgCard(d){
+  return`
+  <div class="tg-card">
+    <div class="tg-hdr">
+      <div class="tg-av">MF</div>
+      <div><div class="tg-ch">Mehdi Farahmand | طلا</div><div class="tg-vs">XAU/USD · ${d.greg}</div></div>
+    </div>
+    <div class="tg-body">${d.telegram}</div>
+    <div class="tg-ts">${d.greg}, 2026 · 09:00 AM ✓✓</div>
+    <div class="tg-actions">
+      <button class="copy-btn" onclick="copyTg(${d.id},this)">کپی 📋</button>
+      <button class="share-btn" onclick="shareTg(${d.id},this)">اشتراک 📤</button>
+    </div>
+  </div>`;
+}
+
 function buildSwipeCards(d){
-  // Chain swipe card
   const chainItems=d.chain.map((c,i)=>`
     <div class="sc-item">
       <div style="display:flex;flex-direction:column;align-items:center">
@@ -1015,6 +1199,16 @@ function buildSwipeCards(d){
         <div style="font-size:13px;color:var(--text2);line-height:2.1;margin-top:14px;font-weight:400">${d.narrative}</div>
       </div>
     </div>
+    <div style="height:10px"></div>
+    <div class="swipe-card" id="sc-tg">
+      <div class="swipe-card-header" onclick="toggleSwipe('sc-tg')">
+        <span class="swipe-card-title">📱 پست آماده تلگرام</span>
+        <span class="swipe-chevron">▼</span>
+      </div>
+      <div class="swipe-card-body">
+        ${buildTgCard(d)}
+      </div>
+    </div>
   </div>`;
 }
 
@@ -1024,7 +1218,6 @@ function toggleSwipe(id){
   const wasOpen=el.classList.contains('open');
   el.classList.toggle('open');
   if(!wasOpen){
-    // animate prob bars if this is the prob card
     if(id==='sc-prob'){
       const d=DAYS[activeDay];
       setTimeout(()=>{
@@ -1095,17 +1288,9 @@ function renderDay(id){
         <div class="sum-text">${d.narrative}</div>
       </div>
     </div>
-    <div class="tg-outer">
+    <div class="tg-outer narrative-desktop">
       <div class="tg-label">📱 پست آماده تلگرام</div>
-      <div class="tg-card">
-        <div class="tg-hdr">
-          <div class="tg-av">MF</div>
-          <div><div class="tg-ch">Mehdi Farahmand | طلا</div><div class="tg-vs">XAU/USD · ${d.greg}</div></div>
-        </div>
-        <div class="tg-body">${d.telegram}</div>
-        <div class="tg-ts">${d.greg}, 2026 · 09:00 AM ✓✓</div>
-        <button class="copy-btn" onclick="copyTg(${d.id})">کپی 📋</button>
-      </div>
+      ${buildTgCard(d)}
     </div>`;
   requestAnimationFrame(()=>{
     panel.style.transition='opacity .5s ease,transform .5s ease';
@@ -1129,11 +1314,21 @@ function selectDay(id){
   document.getElementById('day-panel').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
-function copyTg(id){
+function copyTg(id,btn){
   navigator.clipboard.writeText(DAYS[id].telegram).then(()=>{
-    const btn=document.querySelector('.copy-btn');
-    if(btn){btn.textContent='✅ کپی شد!';setTimeout(()=>btn.textContent='کپی 📋',2000)}
+    if(btn){const orig=btn.innerHTML;btn.innerHTML='✅ کپی شد!';setTimeout(()=>btn.innerHTML=orig,2000)}
   });
+}
+
+function shareTg(id,btn){
+  const text=DAYS[id].telegram;
+  if(navigator.share){
+    navigator.share({title:'تحلیل طلا XAU/USD',text:text}).catch(()=>{});
+  }else{
+    navigator.clipboard.writeText(text).then(()=>{
+      if(btn){const orig=btn.innerHTML;btn.innerHTML='✅ کپی شد';setTimeout(()=>btn.innerHTML=orig,2000)}
+    });
+  }
 }
 
 buildWeekBtns();
